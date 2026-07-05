@@ -46,6 +46,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Boat;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
@@ -211,6 +212,7 @@ public class BukkitRequirementManager implements RequirementManager<Player> {
         this.registerLootOrderRequirement();
         this.registerIsBedrockPlayerRequirement();
         this.registerIsNewSizeRecordRequirement();
+        this.registerInBoatRequirement();
     }
 
     private void registerIsBedrockPlayerRequirement() {
@@ -703,6 +705,19 @@ public class BukkitRequirementManager implements RequirementManager<Player> {
                 return false;
             };
         }, "new-size-record");
+    }
+
+    private void registerInBoatRequirement() {
+        registerRequirement((args, actions, runActions) -> {
+            boolean inBoat = (boolean) args;
+            return context -> {
+                if (context.holder() == null) return false;
+                boolean isInBoat = context.holder().isInsideVehicle() && context.holder().getVehicle() instanceof Boat;
+                if (isInBoat == inBoat) return true;
+                if (runActions) ActionManager.trigger(context, actions);
+                return false;
+            };
+        }, "in-boat");
     }
 
     private void registerHasStatsRequirement() {
