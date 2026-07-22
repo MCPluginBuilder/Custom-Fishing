@@ -74,7 +74,7 @@ public class VoidFishingMechanic implements HookMechanic {
 
     @Override
     public boolean shouldStop() {
-        return !isInVoidFishingArea();
+        return false;
     }
 
     private boolean isInVoidFishingArea() {
