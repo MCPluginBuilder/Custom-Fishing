@@ -101,6 +101,8 @@ public abstract class ConfigManager implements ConfigLoader, Reloadable {
     protected int voidMaxTime;
     protected int finalVoidMaxTime;
     protected int finalVoidMinTime;
+    protected double voidMinHeightDifference;
+    protected double voidMaxDistanceFromBottom;
     protected int multipleLootSpawnDelay;
     protected boolean restrictedSizeRange;
     protected List<String> durabilityLore;
@@ -223,6 +225,14 @@ public abstract class ConfigManager implements ConfigLoader, Reloadable {
 
     public static int finalVoidMaxTime() {
         return instance.finalVoidMaxTime;
+    }
+
+    public static double voidMinHeightDifference() {
+        return instance.voidMinHeightDifference;
+    }
+
+    public static double voidMaxDistanceFromBottom() {
+        return instance.voidMaxDistanceFromBottom;
     }
 
     public static int multipleLootSpawnDelay() {

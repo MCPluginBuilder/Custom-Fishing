@@ -209,6 +209,8 @@ public class BukkitConfigManager extends ConfigManager {
         voidMaxTime = config.getInt("mechanics.void-fishing.max-wait-time", 600);
         finalVoidMinTime = config.getInt("mechanics.void-fishing.final-min-wait-time", 50);
         finalVoidMaxTime = config.getInt("mechanics.void-fishing.final-max-wait-time", 1200);
+        voidMinHeightDifference = config.getDouble("mechanics.void-fishing.min-height-difference", 2d);
+        voidMaxDistanceFromBottom = config.getDouble("mechanics.void-fishing.max-distance-from-bottom", 16d);
 
         restrictedSizeRange = config.getBoolean("mechanics.size.restricted-size-range", true);
 
