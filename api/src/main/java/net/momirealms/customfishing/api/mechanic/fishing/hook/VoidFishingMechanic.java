@@ -65,12 +65,34 @@ public class VoidFishingMechanic implements HookMechanic {
         if (!(boolean) gearsEffect.properties().getOrDefault(EffectProperties.VOID_FISHING, false)) {
             return false;
         }
-        return hook.getLocation().getY() <= hook.getWorld().getMinHeight();
+        // the hook must be at least 2 blocks lower than the player
+        if (context.holder().getLocation().getY() - hook.getLocation().getY() < 2) {
+            return false;
+        }
+        return isInVoidFishingArea();
     }
 
     @Override
     public boolean shouldStop() {
-        return hook.getLocation().getY() > hook.getWorld().getMinHeight();
+        return !isInVoidFishingArea();
+    }
+
+    private boolean isInVoidFishingArea() {
+        Location hookLocation = hook.getLocation();
+        int minHeight = hook.getWorld().getMinHeight();
+        // the hook must be no more than 16 blocks above the world's min height
+        if (hookLocation.getY() > minHeight + 16) {
+            return false;
+        }
+        // all blocks between the hook and the bottom of the world must be air
+        int x = hookLocation.getBlockX();
+        int z = hookLocation.getBlockZ();
+        for (int y = hookLocation.getBlockY(); y >= minHeight; y--) {
+            if (!hook.getWorld().getBlockAt(x, y, z).getType().isAir()) {
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override
